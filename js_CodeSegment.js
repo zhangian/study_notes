@@ -371,3 +371,27 @@ var calculateBonus=function(performace, salary){
 	if(performace==='A') return performaceA(salary);
 	if(performace==='B') return performaceB(salary);
 }
+
+var performaces=function(){};
+performaces.prototype.calculate=function(salary){ return salary*4 };
+
+var performacea=function(){};
+performacea.prototype.calcualte=function(salary) { return salary*3 };
+
+var performaceb=function(){};
+performaceb.prototype.calculate=function(salary) { return salary*2 };
+
+var Bouns=function(){
+	this.salary=null;
+	this.strategy=null;
+}
+
+Bouns.prototype.setSalary=function(salary){
+	this.salary=salary;
+}
+Bouns.prototype.setStrategy=function(strategy){
+	this.strategy=strategy;
+}
+Bouns.prototype.getBouns=function(){
+	return this.strategy.calculate(this.salary);
+}
