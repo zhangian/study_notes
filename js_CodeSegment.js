@@ -376,7 +376,7 @@ var performaces=function(){};
 performaces.prototype.calculate=function(salary){ return salary*4 };
 
 var performacea=function(){};
-performacea.prototype.calcualte=function(salary) { return salary*3 };
+performacea.prototype.calculate=function(salary) { return salary*3 };
 
 var performaceb=function(){};
 performaceb.prototype.calculate=function(salary) { return salary*2 };
@@ -394,4 +394,143 @@ Bouns.prototype.setStrategy=function(strategy){
 }
 Bouns.prototype.getBouns=function(){
 	return this.strategy.calculate(this.salary);
+}
+
+var bouns=new Bouns();
+bouns.setSalary(1000);
+bouns.setStrategy(new performaceb());
+
+bouns.setStrategy(new performaces());
+
+
+//JavaScript 中的策略模式
+var strategies={
+	'S':function(salary){
+		return salary*4;
+	},
+	'A':function(salary){
+		return salary*3;
+	},
+	'B':function(salary){
+		return salary*2;
+	}
+};
+
+var calculateBonu=function(level, salary){
+	return strategies[level](salary);
+}
+
+var tween={
+	linear:function(c, t, d, b){
+		return c*t/d+b;
+	},
+	easeIn:function(c, t, d, b){
+		return c*(t/=d)*t + b;
+	},
+	strongEaseIn:function(c, t, d, b){
+		return c*(t/=d )*t*t*t*t+b;
+	},
+	strongEaseOut:function( t, b, c, d ){
+		return c*((t=t/d-1)*t*t*t*t+1)+b;
+	},
+	sinEaseIn:function( t, b, c, d ){
+		return c*( t/=d )*t*t+b;
+	},
+	sinEaseOut:function(t, b, c, d){
+		return c*((t=t/d-1)*t*t+1)+b;
+	}
+};
+
+var Animate=function(dom){
+	this.dom=dom;
+	this.startTime=0;
+	this.startEnd=0;
+	this.startPos=0;
+	this.endPos=0;
+	this.propertyName=null;
+	this.easing=null;
+	this.duration=null;
+};
+
+Animate.prototype.start=function(propertyName, endPos, duration, easing){
+
+	this.startTime=+new Date;
+	this.startPos=this.dom.getBoundingClientRect()[propertyName];
+	this.propertyName=propertyName;
+	this.endPos=endPos;
+	this.easing=tween[easing];
+	this.duration=duration;
+
+	var self=this;
+	var timeId=setInterval(function(){
+
+		if(self.step()===false) clearInterval(timeId);
+
+	}, 19);
+
+};
+
+Animate.prototype.step=function(){
+
+	var t=+new Date;
+	if(t>=this.startTime + this.duration){
+		this.update(this.endPos);
+		return false;
+	}
+
+	var pos=this.easing(t-this.startTime, this.startPos, this.endPos-this.startPos, this.duration);
+
+	this.update(pos);
+};
+
+Animate.prototype.update=function(pos){
+	this.dom.style[this.propertyName]=pos+'px';
+}
+
+
+var fromStartegies={
+	isMobile:function(value, errorMsg){
+		if(!/^1[3|5|8|7][0-9]{9}/.test(value)) return errorMsg;
+	},
+	minLength:function(value, length, errorMsg){
+		if(value.length<length) return errorMsg;
+	},
+	isNoneEmpty:function(value, errorMsg){
+		if(value==='') return errorMsg;
+	}
+};
+
+var Validator=function(){
+	this.cache=[];
+}
+
+Validator.prototype.add=function(dom, ruler, errorMsg){
+	var ary=ruler.split(':');
+	this.cache.push(function(){
+
+		var strategy=ary.shif();
+		ary.unshift(dom.value);
+		ary.push(errorMsg);
+		return formStartegies[strategy].apply(dom, ary);
+
+	})
+};
+
+Validator.prototype.start=function(){
+	for(var i=0, validatorFunc; validatorFunc=this.cache[i++]){
+		var msg==validatorFunc();
+		if(msg){
+			return msg;
+		}
+	}
+};
+
+var validatorFunc=function(){
+	var validator=new Validator();
+	validator.add(registerForm.userName, 'isNoneEmpty', '用户名不能为空');
+	validator.add(registerForm.password, 'minLength:6', '密码长度不能少于6位');
+	validator.add(registerForm.phoneNumber, 'isMobile', '手机号码格式不正确');
+
+	var errorMsg=validator.start();
+	return errorMsg;
 }
