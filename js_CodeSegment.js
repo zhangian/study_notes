@@ -516,14 +516,57 @@ Validator.prototype.add=function(dom, ruler, errorMsg){
 	})
 };
 
+Validator.prototype.addArray=function(dom, rules){
+	var self=this;
+
+	for(var i=0, rule; rule=rules[i++];){
+		(function(rule){
+			var strategyAry=rule.strategy.split(':');
+			var errorMsg=rule.errorMsg;
+
+			self.cache.push(function(){
+				var strategy=strategyAry.shift();
+				strategyAry.unshift(dom.value);
+				strategyAry.push(errorMsg);
+				return formStartegies[strategy].apply(dom, strategyAry)
+			})
+		})(rule)
+	}
+};
+
 Validator.prototype.start=function(){
-	for(var i=0, validatorFunc; validatorFunc=this.cache[i++]){
-		var msg==validatorFunc();
+	for(var i=0, validatorFunc; validatorFunc=this.cache[i++];){
+		var msg=validatorFunc();
 		if(msg){
 			return msg;
 		}
 	}
 };
+
+Validator.prototype.startAry=function(){
+	for(var i=0, validatorAry; ValidatorAry=this.cache[i++];){
+		var errorMsg=validatorAry();
+		if(errorMsg) return errorMsg;
+	}
+};
+
+var validatorAry=function(){
+	var validator=new Validator();
+	validator.addArray(registerForm.userName, [{
+		strategy:'isNoneEmpty',
+		errorMsg:'用户名不能为空'
+	},
+	{
+		strategy:'minLength:10',
+		errorMsg:'用户名长度不能小于10位'
+	}]);
+
+	validator.addArray(registerForm.password, [{
+		strategy:'minLength:6',
+		errorMsg:'密码长度不能小于6位'
+	}]);
+}
+
 
 var validatorFunc=function(){
 	var validator=new Validator();
@@ -533,4 +576,47 @@ var validatorFunc=function(){
 
 	var errorMsg=validator.start();
 	return errorMsg;
-}
+};
+
+
+var myImage=(function(){
+	var imgNode=document.createElement('img');
+	document.body.appendChild(imgNode);
+
+	return {
+		setSrc:function(src){
+			imgNode.src=src;
+		}
+	}
+})();
+
+var proxyImage=(function(){
+	var img=new Image;
+	img.onload=function(){
+		myImage.setSrc(this.src);
+	}
+	return {
+		setSrc:function(src){
+			myImage.setSrc('../images/loading.gif');
+			img.src=src;
+		}
+	}
+})();
+
+var MyImage=(function(){
+	var imgNode=document.createElement('img');
+	document.body.appendChild(imgNode);
+
+	var img=new Image;
+
+	img.onload=function(){
+		imgNode.src=img.src;
+	};
+
+	return {
+		setSrc:function(src){
+			imgNode.src='../images/loadding.gif';
+			img.src=src;
+		}
+	}
+})()
