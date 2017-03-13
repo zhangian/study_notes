@@ -619,4 +619,113 @@ var MyImage=(function(){
 			img.src=src;
 		}
 	}
+})();
+
+
+var synchronousFile=function(id){
+
+	console.log('开始同步文件，id为:'+id);
+
+}
+
+var proxySynchronousFile=(function(){
+	var cache=[];
+	var timer;
+	return function(id){
+		cache.push(id);
+		if(timer) return;
+
+		timer=setTimeout(function(){
+			synchronousFile(cache.join(','));
+			clearTimeout(timer);
+			timer=null;
+			cache.length=0;
+		}, 2000)
+	}
+})();
+
+var miniConsole=(function(){
+
+	var cache=[];
+	var handler=function(ev){
+		if(ev.keyCode===113){
+			var script=document.createElement('script');
+			script.onload=function(){
+				for(var i=0, fn; fn=cache[i++];){
+					fn();
+				}
+			};
+
+			script.src='miniCode.js';
+			document.getElementsByTagName('head')[0].appendChild(script);
+			document.body.removeEventListener('keydown', handler)
+		}
+	};
+
+	document.addEventListener('keydown', handler, false);
+
+	return {
+		log:function(){
+			var args=arguments;
+			cache.push(function(){
+				return miniConsole.log.apply(miniConsole, args);
+			})
+		}
+	}
 })()
+
+
+//计算乘积
+var mult=function(){
+	console.log('开始计算乘积：');
+
+	var a=1;
+	for(var i=0, l=arguments.length; i<l; i++){
+		a=a*arguments[i];
+	}
+	return a;
+
+};
+
+var proxyMult=(function(){
+	var cache={};
+	return args=Array.prototype.join.call(arguments, ',');
+	if(args in cache){ return cache[args]; }
+
+	return cache[args]=mult.apply(this, arguments);
+
+})();
+
+var plus=function(){
+	var a=0;
+	for(var i=0, l=arguments.length; i<l; i++){
+		a=a+arguments[i];
+	}
+	return a;
+}
+
+var minus=function(){
+	var a=0; 
+	for(var i=0, l=arguments.length; i<l; i++){
+		a=arguments[i]-a;
+	}
+	return a;
+}
+
+var createProxyFactory=function(fn){
+	var cache={};
+	return function(){
+		var args=Array.prototype.join.call(arguments, ',');
+		if(args in cache) return cache[args];
+
+		return cache[args]= fn.apply(this, arguments);
+	}
+}
+
+
+//迭代器
+var each=function(ary, callBack){
+	for(var i=0, l=ary.length; i<l; i++){
+		callBack.call(ary[i], i, ary[i]);
+	}
+}
