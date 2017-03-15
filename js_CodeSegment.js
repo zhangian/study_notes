@@ -728,4 +728,129 @@ var each=function(ary, callBack){
 	for(var i=0, l=ary.length; i<l; i++){
 		callBack.call(ary[i], i, ary[i]);
 	}
+};
+
+
+var Iterator=function(obj){
+	var current=0;
+
+	var next=function(){
+		current +=1;
+	};
+
+	var isDone=function(){
+		return current >=obj.length;
+	};
+
+	var getCurrItem=function(){
+		return obj[current];
+	};
+
+	return {
+		next:next,
+		isDone:isDone,
+		getCurrItem:getCurrItem
+	};
+};
+
+
+var compare=function(iterator1, iterator2){
+
+	while(!iterator1.isDone() && !iterator2.isDone()){
+		if(iterator1.getCurrItem() !== iterator2.getCurrItem()){
+			throw new Error('两者不相等');
+		}
+
+		iterator1.next();
+		iterator2.next();
+	}
+
+	console.log('两者相等')
+
+}
+
+
+var reverseEach=function(ary, callBack){
+	for(var l=ary.length; l>=0; l--){
+		callBack(l, ary[l]);
+	}
+}
+
+
+//发布订阅模式
+
+var salesOffices={};
+	salesOffices.clientList=[];
+
+	salesOffices.listen=function(fn){
+		this.clientList.push(fn);
+	};
+
+	salesOffices.trigger=function(){
+		for(var i=0, fn; fn=this.clientList[i++];){
+			fn.apply(this, arguments);
+		}
+	};
+
+	salesOffices.listen(function(price, squareMeter){ 
+			console.log('价格 '+ price);
+			console.log('squareMeter '+ squareMeter)
+	});
+
+	salesOffices.listen(function(price, meter){
+		console.log('价格 '+ price);
+		console.log('meter '+ meter);
+	});
+
+	salesOffices.trigger(2000, 99);
+	salesOffices.trigger(3000, 100);
+
+	var salesOffice={};
+		salesOffice.clientList={};
+
+	    salesOffice.listen=function(key, fn){
+		if(!this.clientList[key]) this.clientList[key]=[];
+
+		this.clientList[key].push(fn);
+	}
+
+	salesOffice.trigger=function(){
+		var key=Array.prototype.shift.call(arguments);
+
+		var fns=this.clientList[key];
+		if(!fns ||fns.length===0) return false;
+
+		for(var i=0, fn; fn=fns[i++];){
+			fn.apply(this, arguments);
+		}
+	};
+
+
+var events={
+	clientList:[],
+
+	listen:function(key, fn){
+
+		if(!this.clientList[key]) this.clientList[key]=[];
+
+		this.clientList[key].push(fn);
+	},
+
+	trigger:function(){
+
+		var key=Array.prototype.shift.call(arguments);
+		var fns=this.clientList[key];
+
+		if(!fns || fns.length===0) return false;
+
+		for(var i=0, fn; fn=fns[i++];){
+			fn.apply(this, arguments);
+		}
+	}
+};
+
+var installEvent=function(obj){
+	for(var i in events){
+		obj[i]=events[i];
+	}
 }
