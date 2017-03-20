@@ -1160,3 +1160,187 @@ var RefreshmenuBarCommand=function(receiver){
 
 var refreshmenuBarCommand=RefreshmenuBarCommand(Menubar);
 setCommands(button1, refreshmenuBarCommand);
+
+var RefreshmenuBar=function(receiver){
+	return {
+		execute:function(){
+			receiver.refresh();
+		}
+	}
+};
+var setcommand=function(button, command){
+	button.onclick=function(){
+		command.execute();
+	}
+}
+
+var ball=document.getElementById('ball');
+var pos=document.getElementById('pos');
+var moveBtn=document.getElementById('moveBtn');
+
+moveBtn.onclick=function(){
+	var animate=new Animate(ball);
+	animate.start('left', pos.value, 1000, 'strongEaseOut');
+};
+
+var MoveCommand=function(receiver, pos){
+	this.receiver=receiver;
+	this.pos=pos;
+	this.oldPos=null;
+};
+
+MoveCommand.prototype.execute=function(){
+	this.receiver.start('left', this.pos, 1000, 'strongEaseOut');
+	this.oldPos=this.receiver.getBoundingClientRect()[this.receiver.propertyName];
+}
+
+MoveCommand.prototype.undo=function(){
+	this.receiver.start('left', this.oldPos, 1000, 'StrongEaseOut')
+}
+
+var moveCommand;
+
+moveBtn.onclick=function(){
+	var animate=new Animate(ball);
+	moveCommand=new MoveCommand(animate, pos.value);
+	moveCommand.execute();
+}
+
+var Ryu={
+	attack:function(){
+		console.log('攻击');
+	},
+
+	defense:function(){
+		console.log('防御');
+	},
+
+	jump:function(){
+		console.log('跳跃');
+	},
+
+	crouch:function(){
+		console.log('蹲下');
+	}
+};
+
+var makeCommand=function(receiver, state){
+	return function(){ receiver[state](); }
+};
+
+var commands={
+	"119":"jump",      //W
+	"115":"crouch",   //S
+	"97" :"defense", //A
+	"100":"attack"  // D
+};
+
+var commandStack=[];
+
+document.onkeypress=function(ev){
+	var keyCode=ev.keyCode;
+	var command=makeCommand(Ryu, commands[keyCode]);
+
+	if(command){
+		command();
+		commandStack.push(command);
+	}
+}
+
+document.getElementById('replay').onclick=function(){
+	var command;
+	while(command=commandStack.shift()){
+		command();
+	}
+};
+
+
+var closeDoorCommand={
+	execute:function(){
+		console.log('关门');
+	}
+}
+
+var openComputerCommand={
+	execute:function(){
+		console.log('打开电脑');
+	}
+};
+
+var openQQCommand={
+	execute:function(){
+		console.log('打开QQ');
+	}
+}
+
+var MacroCommand=function(){
+	return {
+		commandList:[],
+		add:function(command){
+			this.commandList.push(command)
+		},
+		execute:function(){
+			for(var i=0, command; command=this.commandList[i++];) command.execute();
+		}
+	}
+};
+
+var macroCommand=MacroCommand();
+macroCommand.add(closeDoorCommand);
+macroCommand.add(openComputerCommand);
+macroCommand.add(openQQCommand);
+macroCommand.execute();
+
+var MacroCommands=function(){
+	return {
+		commandsList:[],
+
+		add:function(command){
+			this.commandsList.push(command);
+		},
+
+		execute:function(){
+			for(var i=0, command; command=this.commandsList[i++];) {
+				command.execute();
+			}
+		}
+	}
+};
+
+var openAcCommand={
+	execute:function(){
+		console.log('打开空调');
+	}
+};
+
+var openTvCommand={
+	execute:function(){
+		console.log('打开电视');
+	}
+};
+
+var openSoundCommand={
+	execute:function(){
+		console.log('打开音响');
+	}
+};
+
+var marcoCommand1=MacroCommands();
+marcoCommand1.add(openTvCommand);
+marcoCommand1.add(openSoundCommand);
+
+var marcoCommand2=MacroCommands();
+marcoCommand2.add(closeDoorCommand);
+marcoCommand2.add(openComputerCommand);
+marcoCommand2.add(openQQCommand);
+
+var marcoCommands=MacroCommands();
+marcoCommands.add(openAcCommand);
+marcoCommands.add(marcoCommand1);
+marcoCommands.add(marcoCommand2);
+
+var setCommand=(function(command){
+	document.getElementById('botton').onclick=function(){
+		command.execute();
+	}
+})(marcoCommands)
