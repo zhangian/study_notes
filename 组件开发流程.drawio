@@ -1,1 +1,76 @@
-<mxfile host="app.diagrams.net" modified="2020-11-04T08:20:44.304Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.102 Safari/537.36" version="13.8.9-1" etag="s34g1sX5yHudreydao_D" type="github"><diagram id="RbHKjh0jR4BDuhc3ZYMs">UzV2zq1wL0osyPDNT0nNUTV2VTV2LsrPL4GwciucU3NyVI0MMlNUjV1UjYwMgFjVyA2HrCFY1qAgsSg1rwSLBiADYTaQg2Y1AA==</diagram></mxfile>
+<mxfile host="app.diagrams.net" modified="2020-11-04T08:38:19.051Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.102 Safari/537.36" etag="uA-aZEOLipoA3SUIhGM-" version="13.8.9-1" type="github">
+  <diagram id="RbHKjh0jR4BDuhc3ZYMs" name="Page-1">
+    <mxGraphModel dx="1422" dy="794" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="qwXZF5udb7B5QJ63W8Dp-7" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="qwXZF5udb7B5QJ63W8Dp-6">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="270" y="475" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="qwXZF5udb7B5QJ63W8Dp-6" value="需求分析" style="rounded=0;whiteSpace=wrap;html=1;shadow=1;" vertex="1" parent="1">
+          <mxGeometry x="120" y="380" width="80" height="190" as="geometry" />
+        </mxCell>
+        <mxCell id="qwXZF5udb7B5QJ63W8Dp-8" value="页面分化" style="rounded=0;whiteSpace=wrap;html=1;shadow=1;" vertex="1" parent="1">
+          <mxGeometry x="270" y="380" width="80" height="190" as="geometry" />
+        </mxCell>
+        <mxCell id="qwXZF5udb7B5QJ63W8Dp-9" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="420" y="474.5" as="targetPoint" />
+            <mxPoint x="350" y="474.5" as="sourcePoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="qwXZF5udb7B5QJ63W8Dp-17" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;" edge="1" parent="1" source="qwXZF5udb7B5QJ63W8Dp-10">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="580" y="475" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="qwXZF5udb7B5QJ63W8Dp-10" value="页面拆分&lt;br&gt;组件设计" style="rounded=0;whiteSpace=wrap;html=1;shadow=1;" vertex="1" parent="1">
+          <mxGeometry x="420" y="380" width="80" height="190" as="geometry" />
+        </mxCell>
+        <mxCell id="qwXZF5udb7B5QJ63W8Dp-12" value="组件功能合并" style="rounded=0;whiteSpace=wrap;html=1;shadow=1;" vertex="1" parent="1">
+          <mxGeometry x="580" y="380" width="120" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="qwXZF5udb7B5QJ63W8Dp-16" value="" style="endArrow=classic;html=1;exitX=1;exitY=0.25;exitDx=0;exitDy=0;" edge="1" parent="1" source="qwXZF5udb7B5QJ63W8Dp-10">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="530" y="450" as="sourcePoint" />
+            <mxPoint x="580" y="400" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="qwXZF5udb7B5QJ63W8Dp-27" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;" edge="1" parent="1" source="qwXZF5udb7B5QJ63W8Dp-18">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="790" y="475" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="qwXZF5udb7B5QJ63W8Dp-18" value="组件功能合并" style="rounded=0;whiteSpace=wrap;html=1;shadow=1;" vertex="1" parent="1">
+          <mxGeometry x="580" y="455" width="120" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="qwXZF5udb7B5QJ63W8Dp-19" value="组件功能合并" style="rounded=0;whiteSpace=wrap;html=1;shadow=1;" vertex="1" parent="1">
+          <mxGeometry x="580" y="530" width="120" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="qwXZF5udb7B5QJ63W8Dp-20" value="" style="endArrow=classic;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;exitX=1;exitY=0.75;exitDx=0;exitDy=0;" edge="1" parent="1" source="qwXZF5udb7B5QJ63W8Dp-10" target="qwXZF5udb7B5QJ63W8Dp-19">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="500" y="530" as="sourcePoint" />
+            <mxPoint x="550" y="480" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="qwXZF5udb7B5QJ63W8Dp-22" value="页面组件集成" style="rounded=0;whiteSpace=wrap;html=1;shadow=1;" vertex="1" parent="1">
+          <mxGeometry x="800" y="380" width="80" height="190" as="geometry" />
+        </mxCell>
+        <mxCell id="qwXZF5udb7B5QJ63W8Dp-24" value="" style="endArrow=classic;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" target="qwXZF5udb7B5QJ63W8Dp-22">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="700" y="400" as="sourcePoint" />
+            <mxPoint x="750" y="350" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="qwXZF5udb7B5QJ63W8Dp-25" value="" style="endArrow=classic;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;exitX=1;exitY=0.5;exitDx=0;exitDy=0;" edge="1" parent="1" source="qwXZF5udb7B5QJ63W8Dp-19" target="qwXZF5udb7B5QJ63W8Dp-22">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="700" y="550" as="sourcePoint" />
+            <mxPoint x="750" y="500" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
